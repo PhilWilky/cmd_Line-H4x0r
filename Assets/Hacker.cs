@@ -5,11 +5,17 @@ using UnityEngine;
 
 public class Hacker : MonoBehaviour {
 
+    // Game config data
+    string[] level1Passwords = { "Education","Teachers","curriculum","syllabus"};
+    string[] level2Passwords = { "Convict", "Prisoner", "Manslaughter", "Homicide" };
+
     // Game state
     int level;
+    string password;
 
     enum Screen { MainMenu, Password, Win }
     Screen currentScreen = Screen.MainMenu;
+
 
 	// Use this for initialization
 	void Start ()
@@ -28,8 +34,8 @@ public class Hacker : MonoBehaviour {
         Terminal.WriteLine("Welcome to cmd_Line H4xor,");
         Terminal.WriteLine("What would you like to hax?");
         Terminal.WriteLine("");
-        Terminal.WriteLine("Press 1 for town Library");
-        Terminal.WriteLine("Press 2 for local School");
+        Terminal.WriteLine("Press 1 for local School");
+        Terminal.WriteLine("Press 2 for Police Station");
         Terminal.WriteLine("Enter your selection:");
 
 
@@ -45,6 +51,11 @@ public class Hacker : MonoBehaviour {
             RunMainMenu(input);
 
         }
+        else if (currentScreen == Screen.Password)
+        {
+            CheckPassword(input);
+
+        }
 
     }
 
@@ -53,11 +64,13 @@ public class Hacker : MonoBehaviour {
         if (input == "1")
         {
             level = 1;
+            password = level1Passwords[2]; //todo make random later
             StartGame();
         }
         else if (input == "2")
         {
             level = 2;
+            password = level2Passwords[2]; //todo make random later
             StartGame();
 
         }
@@ -73,5 +86,17 @@ public class Hacker : MonoBehaviour {
 
         Terminal.WriteLine("You have chosen level " + level);
         Terminal.WriteLine("Please enter your Password");
+    }
+
+    void CheckPassword(string input)
+    {
+        if (input == password)
+        {
+            Terminal.WriteLine("Well done!");
+        }
+        else
+        {
+            Terminal.WriteLine("Sorry, wrong password!");
+        }
     }
 }
