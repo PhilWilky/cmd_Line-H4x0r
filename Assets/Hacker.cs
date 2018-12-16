@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Hacker : MonoBehaviour {
 
@@ -22,7 +19,14 @@ public class Hacker : MonoBehaviour {
     {
         ShowMainMenu();
     }
-	// takes user to main menu screen
+
+    // Use every frame
+    void Update()
+    {
+
+    }
+
+    // takes user to main menu screen
     void ShowMainMenu()
     {
         currentScreen = Screen.MainMenu;
@@ -61,18 +65,11 @@ public class Hacker : MonoBehaviour {
 
     void RunMainMenu(string input)
     {
-        if (input == "1")
+        bool isvalidLevelNumber = (input == "1" || input == "2");
+        if (isvalidLevelNumber)
         {
-            level = 1;
-            password = level1Passwords[2]; //todo make random later
+            level = int.Parse(input);
             StartGame();
-        }
-        else if (input == "2")
-        {
-            level = 2;
-            password = level2Passwords[2]; //todo make random later
-            StartGame();
-
         }
         else
         {
@@ -83,8 +80,20 @@ public class Hacker : MonoBehaviour {
     void StartGame()
     {
         currentScreen = Screen.Password;
+        Terminal.ClearScreen();
+        switch (level)
+        {
+            case 1:
+                password = level1Passwords[Random.Range(0, level1Passwords.Length)];
+                break;
+            case 2:
+                password = level1Passwords[Random.Range(0, level2Passwords.Length)];
+                break;
+            default:
+                Debug.LogError("Invailed Level");
+                break;
+        }
 
-        Terminal.WriteLine("You have chosen level " + level);
         Terminal.WriteLine("Please enter your Password");
     }
 
